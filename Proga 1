@@ -1,0 +1,71 @@
+import csv
+
+c = 1
+
+class W:
+
+    def __init__(self):
+        self.w = []
+
+    def a(self, w):
+        self.w.append(w)
+
+    def r(self):
+        for w in self.w:
+            print(f"ID: {w.i()}, Name: {w.n}, Surname: {w.s}, Department: {w.d}, Salary: {w.sa}")
+
+    def e(self, w_i, n, s, d, sa):
+        for w in self.w:
+            if w.i() == w_i:
+                w.n = n
+                w.s = s
+                w.d = d
+                w.sa = sa
+
+    def d(self, w_i):
+        self.w = [w for w in self.w if w.i() != w_i]
+
+    @staticmethod
+    def sd(func):
+        def wrapper(self, *args, **kwargs):
+            sw = sorted(self.w, key=lambda x: x.n) 
+            func(self, sw, *args, **kwargs)
+        return wrapper
+
+    @sd
+    def s(self, sw):
+        for w in sw:
+            print(f"ID: {w.i()}, Name: {w.n}, Surname: {w.s}, Department: {w.d}, Salary: {w.sa}")
+
+    @sd
+    def se(self, kw):
+        sr = [w for w in self.w if kw.lower() in w.n.lower() or kw.lower() in w.s.lower()]
+        for w in sr:
+            print(f"ID: {w.i()}, Name: {w.n}, Surname: {w.s}, Department: {w.d}, Salary: {w.sa}")
+
+
+class Wk:
+    def __init__(self, n, s, d, sa):
+        global c
+        self.__i = c
+        c += 1
+        self.n = n
+        self.s = s
+        self.d = d
+        self.sa = sa
+
+    def i(self):
+        return self.__i
+
+    def si(self, w_i):
+        self.__i = w_i
+
+
+with open("w.csv", newline='') as f:
+    r = csv.DictReader(f)
+    wd = W()
+    for rw in r:
+        w = Wk(rw['name'], rw['surname'], rw['department'], rw['salary'])
+        wd.a(w)
+
+wd.r()
